@@ -14,6 +14,4 @@ One of the fundamental hard problems in modern Post-Quantum Cryptography is Lear
 
 # References
 
-[^1]: Y. Elias, K. E. Lauter, E. Ozman, and K. E. Stange,
-"Provably Weak Instances of Ring-LWE," 2015.
-[arXiv:1502.03708](https://arxiv.org/abs/1502.03708).
+[^1]: Y. Elias, K. E. Lauter, E. Ozman, and K. E. Stange, "Provably Weak Instances of Ring-LWE," 2015. [arXiv:1502.03708](https://arxiv.org/abs/1502.03708).
