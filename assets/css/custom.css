@@ -4,7 +4,6 @@
 
 @media (min-width: 64em) {
     .layout--single .page__content {
-        max-width: none !important;
         width: 950px !important;
     }
 
@@ -14,6 +13,11 @@
     }
 }
 
-mjx-container[display="true"] {
+.page__content .MathJax_Display {
     text-align: center !important;
+}
+
+.page__content mjx-container[display="true"] {
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
