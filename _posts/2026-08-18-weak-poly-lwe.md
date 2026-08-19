@@ -55,7 +55,7 @@ There are specific properties that the ring $R_q$ must satisfy to be vulnerable 
 The method fo generating such polynomial rings along with the prime $q$ is described later in the section: [Generating Weak Rings](#generating-weak-rings)
 # Poly-LWE in Sagemath 
 
-While `sagemath` doesn't provide us with an implementation of Poly-LWE, it does provide us with a [Ring-LWE Oracle Generator](https://doc.sagemath.org/html/en/reference/cryptography/sage/crypto/lwe.html#sage.crypto.lwe.RingLWE) with the option to provide our own  polynomial for calculating the Quotient Group $R_q$, which turns it into a Poly-LWE Oracle.
+While `sagemath` doesn't provide us with an implementation of Poly-LWE, it does provide us with a [Ring-LWE Oracle Generator](https://doc.sagemath.org/html/en/reference/cryptography/sage/crypto/lwe.html#sage.crypto.lwe.RingLWE) with the option to provide our own  polynomial for calculating the Quotient Group $R_q$, which effectively turns it into a Poly-LWE Oracle.
 
 Throughout the article, we would work with the parameters $q =  13783771$, and 
 
@@ -97,13 +97,36 @@ PolyLWEInstance = RingLWE(N, q, D, poly = f)
 **Note:** While it is possible to import the Ring-LWE oracle directly from sagemath, one of the drawbacks is that implementation doesn't reveal the secret polynomial $s(x)$, which might be nedeed for verifying if our attack works. For this purpouse, one can slightly modify sage's implementation to reveal the secret as in the section: [Modifying Sagemath's Ring-LWE Oracle to Verify the Secret](#modi)
 {: .notice--info}
 
-For our next stages, we would need to calculate the roots of this polynomial. Then we could also verify that all the roots of $f(x)\pmod{q}$ are low-order. 
+For our next stages, we would need to calculate the roots of this polynomial. Although we had already talked about the factorization of $f(x)$ and the roots in the beginning of this section, we now show how we could calculate this for ourselves. 
+
+```python 
+f_q = R_q(f) #taking f(x) mod q
+
+roots = [r[0] for r in f_q.roots()]
+```
+
+We could also verify for ourselves that all the roots of $f(x)\pmod{q}$ are low-order (i.e. $<< q$) as follows:
+
+```python  
+for r in roots:
+    print(f"order of the root {r} : {r.multiplicative_order()}")
+```
+
+**Output:**
+```
+order of the root 13783770 : 2
+order of the root 8774745 : 3
+order of the root 5009025 : 3
+order of the root 1 : 1
+```
 
 # Attack Setup 
-# Recovering the Complete Secret with Lagrange Interpolation
-# Generating Weak Rings
 
+# Recovering the Complete Secret with Lagrange Interpolation
+
+# Generating Weak Rings
 {: #polygen}
+
 # Modifying Sagemath's Ring-LWE Oracle to Verify the Secret
 {: #modi}
 
