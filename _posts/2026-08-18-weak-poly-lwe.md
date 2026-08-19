@@ -31,14 +31,14 @@ There are specific properties that the ring $R_q$ must satisfy to be vulnerable 
 
 1. $q$ must be a prime such that $f(x)$ factorizes completely modulo $q$. 
 	
-	{% capture notice-2 %}
-	**Note:** This might be counterintuitive to the fact that $f(x)$ is an irreducible polynomial in $\mathbb{Z}[x]$, so let's demonstrate what it means with an example.
-	{% endcapture %}
+	**Note:** This might be counterintuitive to the fact that $f(x)$ is an irreducible polynomial in $\mathbb{Z}[x]$, so let's demonstrate what it means with the example below. 
+	{: .notice--success}
 	
-	<div class="notice--success">
-	  {{ notice-2 | markdownify }}
-	</div>
-		
+	*Example 1:* Let's take $f(x) =  x^2 + 603$ and the prime $q =  151$. By itself, $f(x)$ cannot be reduced into factors $c(x), d(x)$ such that $f(x) = c(x)d(x)$. 
+	But when we take $f(x) \mod 151$, we get $$f(x) \equiv x^2 + 150 \mod 151$$
+	Which factorizes into $$f(x) \equiv (x + 1) (x + 150) \mod 151$$
+	Let's verify this. $$f(x)\equiv x^2 + x + 150x + 150 \mod 151$$ $$\equiv x^2 + 151x + 150   \mod 151 \equiv x^2 + 150 \mod151$$  
+	
 2. All theh roots of $f(x)$ must be of small [order](https://crypto.stanford.edu/pbc/notes/numbertheory/order.html) or $\pm 1$.
 	
 	**Note:** The original paper only requires $f(x)$ to have a single root of small order. This is because the original paper only recovers a single homomorphic image of the secret polynomial $s(x)$ and does not attempt to recover the whole of $s(x)$
