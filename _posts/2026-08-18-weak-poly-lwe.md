@@ -120,9 +120,21 @@ order of the root 5009025 : 3
 order of the root 1 : 1
 ```
 
+# Decision and Search Poly-LWE problem 
+
 # Attack Setup 
 
+The attack proceeds in the following four stages:
+
+1. Transfer the problem from $R_q$ to $\mathbb{Z}_q$ via a ring homomorphism $\phi:R_q \rightarrow \mathbb{Z}_q$.
+2. Loop through the guesses for the possible images $\phi(s(x))$ of the secret.
+3. Assuming that the guess at hand is correct, compute image of the error polynomials $\phi(e_i(x))$.
+4. Examime the distribution of $\phi(e_i(x))$ to determine if it matches the distribution the errors are sampled from or not.
+
+In the next section ([Recovering the Complete Secret with Lagrange Interpolation](#recover)), we extend this further to enable recovery of the complete secret. 
+
 # Recovering the Complete Secret with Lagrange Interpolation
+{: #recover}
 
 # Generating Weak Rings
 {: #polygen}
