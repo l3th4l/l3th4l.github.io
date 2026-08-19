@@ -14,7 +14,8 @@ One of the fundamental hard problems in modern Post-Quantum Cryptography is Lear
 
 More specifically, I'd describe `Algorithm 1` from the paper, with accompanying code in `python / sagemath`, along with a demo of the best-case scenario where it allows for the full secret recovery in Poly-LWE. 
 
-**Practicality Note:** The best case scenario results in a toy problem, with the secret polynomial being of degree 4. Any higher order polynomial (i.e. for most practical applications), would render complete secret recovery impractical with the current approach. {: .notice--warning}
+**Practicality Note:** The best case scenario results in a toy problem, with the secret polynomial being of degree 4. Any higher order polynomial (i.e. for most practical applications), would render complete secret recovery impractical with the current approach. 
+{: .notice--warning}
 
 # Background : Poly-LWE and Weak Fields
 
