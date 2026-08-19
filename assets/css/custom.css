@@ -1,12 +1,13 @@
+.layout--single .page__content {
+    background: inherit !important;
+}
 
-/* Make the article wider */
 @media (min-width: 64em) {
     .layout--single .page__content {
-        max-width: 950px !important;
-        width: 100% !important;
+        max-width: none !important;
+        width: 950px !important;
     }
 
-    /* Reduce article text size */
     .layout--single .page__content p {
         font-size: 0.85em !important;
         line-height: 1.7;
@@ -14,6 +15,5 @@
 }
 
 mjx-container[display="true"] {
-  display: block;
-  text-align: center !important;
+    text-align: center !important;
 }
