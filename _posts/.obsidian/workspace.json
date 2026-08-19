@@ -55,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#recocver",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -189,7 +189,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "2926f8cecbb9a240",
+  "active": "83e06eb5acc8244b",
   "lastOpenFiles": [
     "2010-01-07-post-standard.md",
     "2019-04-18-welcome-to-jekyll.md",

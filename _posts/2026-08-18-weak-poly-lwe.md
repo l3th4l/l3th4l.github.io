@@ -6,7 +6,7 @@ tags:
   - Cryptography
   - LWE
   - FHE
-date: 2019-04-18T15:34:30-04:00
+date: 2026-04-18T15:34:30-04:00
 ---
 One of the fundamental hard problems in modern Post-Quantum Cryptography is Learning With Errors (LWE). Poly-LWE adds algebraic structure to the LWE problem by substituting the vectors in LWE with polynomials. However, this also induces the potential risk of being vulnerable to attacks exploiting its algebraic structure. 
 
@@ -132,6 +132,14 @@ The attack proceeds in the following four stages:
 4. Examime the distribution of $\phi(e_i(x))$ to determine if it matches the distribution the errors are sampled from or not.
 
 In the next section ([Recovering the Complete Secret with Lagrange Interpolation](#recover)), we extend this further to enable recovery of the complete secret. 
+
+## Transferring to $\mathbb{Z}_q$ 
+
+The first step of our attack requires us to find a ring homomorphism from $R_q$ to $\mathbb{Z}_q$, which makes the problem of guessing the secret, and validating the distribution of the errors tractable, given a root of small order. 
+
+Given $f(x)$ has no double roots, we specify a root $\alpha = \alpha_i$, where $\alpha_i$ for $i=0, 1, ..., n-1$ are roots of $f(x)$. We define the evaluation homomorphism as : 
+
+$$\phi_{\alpha} : R_q \rightarrow \mathbb{Z}_q \; \; ,  \phi_\alpha(g) = g(\alpha)$$
 
 # Recovering the Complete Secret with Lagrange Interpolation
 {: #recover}
