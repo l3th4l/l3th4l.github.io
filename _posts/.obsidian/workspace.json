@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "26-08-18-weak-poly-lwe.md",
+                "file": "2026-08-18-weak-poly-lwe.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "26-08-18-weak-poly-lwe"
+              "title": "2026-08-18-weak-poly-lwe"
             }
           }
         ]
@@ -229,11 +229,14 @@
   },
   "active": "83e06eb5acc8244b",
   "lastOpenFiles": [
-    "2010-02-05-post-notice.md",
-    "26-08-18-weak-poly-lwe.md",
-    "Untitled.base",
-    "2010-01-07-post-standard.md",
+    "2010-01-08-post-chat.md",
     "2010-01-07-post-modified.md",
-    "2010-01-08-post-chat.md"
+    "2010-01-07-post-standard.md",
+    "2010-02-05-post-notice.md",
+    "2010-02-05-post-quote.md",
+    "2010-03-07-post-link.md",
+    "2019-04-18-welcome-to-jekyll.md",
+    "2026-08-18-weak-poly-lwe.md",
+    "Untitled.base"
   ]
 }
