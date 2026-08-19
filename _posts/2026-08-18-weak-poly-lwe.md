@@ -59,7 +59,11 @@ While `sagemath` doesn't provide us with an implementation of Poly-LWE, it does 
 
 Throughout the article, we would work with the parameters $q =  13783771$, and 
 
-$$f(x) = x^4 - 13783770x^3 + 233945232486523x^2 - 605837133717152552775x + 605836899771878714937$$
+$$\begin{aligned}
+f(x) ={}& x^4 - 13783770x^3 + 233945232486523x^2 \\
+        &- 605837133717152552775x \\
+        &+ 605836899771878714937.
+\end{aligned}$$
 
 Which factorizes completely mod $q$ into: 
 
