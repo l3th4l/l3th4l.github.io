@@ -44,24 +44,60 @@ There are specific properties that the ring $R_q$ must satisfy to be vulnerable 
 	>
 	> Let's verify this. 
 	>
-	> $$\begin{aligned} f(x) &\equiv x^2 + x + 150x + 150 \pmod{151} \\ &\equiv x^2 + 151x + 150   \pmod{151} \\ &\equiv x^2 + 150 \pmod{151} \end{aligned}$$  
-	{: .notice--success}
+	> $$\begin{aligned} f(x) &\equiv x^2 + x + 150x + 150 \pmod{151} \\ &\equiv x^2 + 151x + 150   \pmod{151} \\ &\equiv x^2 + 150 \pmod{151} \end{aligned}$$
+	{: .notice--info}
 
 1. All theh roots of $f(x)$ must be of small [order](https://crypto.stanford.edu/pbc/notes/numbertheory/order.html) or $\pm 1$.
 	
 	**Note:** The original paper only requires $f(x)$ to have a single root of small order. This is because the original paper only recovers a single homomorphic image of the secret polynomial $s(x)$ and does not attempt to recover the whole of $s(x)$
-	{: .notice--success}
+	{: .notice--info}
 
+The method fo generating such polynomial rings along with the prime $q$ is described later in the section: [Generating Weak Rings](#polygen)
 # Poly-LWE in Sagemath 
 
 While `sagemath` doesn't provide us with an implementation of Poly-LWE, it does provide us with a [Ring-LWE Oracle Generator](https://doc.sagemath.org/html/en/reference/cryptography/sage/crypto/lwe.html#sage.crypto.lwe.RingLWE) with the option to provide our own  polynomial for calculating the Quotient Group $R_q$, which turns it into a Poly-LWE Oracle.
 
+Throughout the article, we would work with the parameters $q =  13783771$, and 
+$$f(x) = x^4 - 13783770x^3 + 233945232486523x^2 - 605837133717152552775x + 605836899771878714937$$
+
+Which factorizes completely mod $q$ into: 
+$$f(x) = (x-13783770)(x-8774745)(x-5009025)(x-1) \pmod{q}$$
+
+It is clear from this expression that $13783770, 8774745, 5009025$ and $1$ are roots of $f(x)$. Let's define this in our `sagemath` code:
+
+```python
+q = 13783771
+F = GF(q)
+R_q = PolynomialRing(F, 'x')
+
+N = 4 #degree of the polynomial
+
+f = x^4 - 13783770*x^3 + 233945232486523*x^2 - 605837133717152552775*x + 605836899771878714937
+```
+
+For the noise sampler, we would be going with a Discrete Gaussian Sampler with mean $0$, and the variance $\sigma = 3$. With the parameters now defined, we could create the Poly-LWE instance as follows: 
+
+```python 
+from sage.crypto.lwe import RingLWE, DiscreteGaussianDistributionPolynomialSampler
+
+sigma = 3.0
+
+#the noise distribution
+D = DiscreteGaussianDistributionPolynomialSampler(ZZ['x'], n=euler_phi(N), sigma=sigma)
+
+PolyLWEInstance = RingLWE(N, q, D, poly = f)
+```
+
 **Note:** While it is possible to import the Ring-LWE oracle directly from sagemath, one of the drawbacks is that implementation doesn't reveal the secret polynomial $s(x)$, which might be nedeed for verifying if our attack works. For this purpouse, one can slightly modify sage's implementation to reveal the secret as in the section: [Modifying Sagemath's Ring-LWE Oracle to Verify the Secret](#modi)
 {: .notice--info}
+
+For our next stages, we would need to calculate the roots of this polynomial. Then we could also verify that all the roots of $f(x)\pmod{q}$ are low-order. 
 
 # Attack Setup 
 # Recovering the Complete Secret with Lagrange Interpolation
 # Generating Weak Rings
+
+{: #polygen}
 # Modifying Sagemath's Ring-LWE Oracle to Verify the Secret
 {: #modi}
 
