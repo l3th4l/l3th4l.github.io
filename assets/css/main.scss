@@ -1,6 +1,13 @@
+
+@import "minimal-mistakes";
+
 @media (min-width: 64em) {
+  .page {
+    width: calc(100% - 200px);
+  }
+
   .page__content {
-    max-width: 900px;
+    max-width: 100%;
     font-size: 0.9em;
     line-height: 1.7;
   }
