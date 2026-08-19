@@ -37,17 +37,15 @@ There are specific properties that the ring $R_q$ must satisfy to be vulnerable 
 	*Example 1:* Let's take $f(x) =  x^2 + 603$ and the prime $q =  151$. By itself, $f(x)$ cannot be reduced into factors $c(x), d(x)$ such that $f(x) = c(x)d(x)$. 
 	But when we take $f(x) \mod 151$, we get 
 	
-	$f(x) \equiv x^2 + 150 \mod 151$
-	
+	$$f(x) \equiv x^2 + 150 \mod 151$$
+
 	Which factorizes into 
-	
-	$f(x) \equiv (x + 1) (x + 150) \mod 151$
+	$$f(x) \equiv (x + 1) (x + 150) \mod 151$$
 	
 	Let's verify this. 
-	
-	$f(x)\equiv x^2 + x + 150x + 150 \mod 151$
-	
-	$\equiv x^2 + 151x + 150   \mod 151 \equiv x^2 + 150 \mod151$  
+	$$f(x)\equiv x^2 + x + 150x + 150 \mod 151$$
+	$$\equiv x^2 + 151x + 150   \mod 151$$
+	$$\equiv x^2 + 150 \mod151$$  
 	
 2. All theh roots of $f(x)$ must be of small [order](https://crypto.stanford.edu/pbc/notes/numbertheory/order.html) or $\pm 1$.
 	
