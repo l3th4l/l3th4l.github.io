@@ -40,11 +40,15 @@ There are specific properties that the ring $R_q$ must satisfy to be vulnerable 
 	$$f(x) \equiv x^2 + 150 \mod 151$$
 
 	Which factorizes into 
+	
 	$$f(x) \equiv (x + 1) (x + 150) \mod 151$$
 	
 	Let's verify this. 
+	
 	$$f(x)\equiv x^2 + x + 150x + 150 \mod 151$$
+	
 	$$\equiv x^2 + 151x + 150   \mod 151$$
+	
 	$$\equiv x^2 + 150 \mod151$$  
 	
 2. All theh roots of $f(x)$ must be of small [order](https://crypto.stanford.edu/pbc/notes/numbertheory/order.html) or $\pm 1$.
