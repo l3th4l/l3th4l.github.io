@@ -157,6 +157,29 @@ We combine step 2. and 3. since every guess for the secret's image yields a corr
 
 We loop through all the possible values of $g\in\mathbb{Z}_q$, where each $g$ is considered to be a guess for the image of the secret $s(\alpha)$, i.e., $g=s(\alpha)$
 
+For each guess $g$, we assume that it is a correct guess for $s(\alpha)$ and we compute the image of the errors $e_j(\alpha)_{j=1,...,m}$ as
+
+$$\begin{aligned} e_j(\alpha) & = b_j(\alpha) - a_j(\alpha)g \\
+&=b_j(\alpha) - a_j(\alpha)s(\alpha)\end{aligned}$$
+If our guess $g$, is correct, then the collection of error images $\left\{e_j(\alpha)\right\}$ follow the distribution $\phi_\alpha(\mathcal{N}_\sigma)$ 
+
+## Verifying Membership of the Error Images in the Error Distribution
+
+Now that we have the images of our erros $\left\{e_j(\alpha)\right\}$, we must determine if the errors belong to the distribution our errors were originally sampled from, i.e. $\mathcal{N}_\sigma$. This gives us a way to determine if the pairs $(a_j(x), b_j(x))$ were generated from a Poly-LWE instance or are uniformly sampled from $R_q \times R_q$, which is only possible if out guess $g$ matches the image of the actual secret $s(\alpha)$. 
+
+To do this, we first compute the set $S$ of all possible values of $e(\alpha)$. Since $e(\alpha)$ is defined as 
+
+$$e(\alpha) = e_0 + \alpha e_1 + \alpha^2 e_2 +...+\alpha^{n-1} e_{n-1}$$
+
+Since $\alpha$ is a root of small order $r$ modulo $q$ by assumption, i.e., $\alpha^r\equiv 1 \pmod{q}$, we can simplify this sum in the following 2 cases: 
+
+### Case 1: $n$ is divisible by $r$
+
+Here, calculating $e(\alpha)$ is pretty straightforward.
+
+$$e(\alpha) = $$
+
+### Case 2: $n$ is not divisible by $r$
 
 
 # Recovering the Complete Secret with Lagrange Interpolation
