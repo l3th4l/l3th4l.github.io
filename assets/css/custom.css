@@ -22,7 +22,7 @@
     margin-right: auto !important;
 }
 
-/* --- High-Specificity Override to Force Sticky Positioning --- */
+/* --- High-Specificity Override to Force Sticky Positioning & Wider Sidebar --- */
 @media screen and (min-width: 64em) {
   .initial-content, 
   .layout--single, 
@@ -49,8 +49,16 @@
     z-index: 10 !important;
 
     /* Expand the width to fill the empty space */
-    flex: 0 0 280px !important; /* Sets a fixed, comfortable width (adjust 280px if needed) */
-    min-width: 280px !important;
+    flex: 0 0 300px !important; 
+    width: 300px !important;
+    min-width: 300px !important;
+  }
+
+  /* Ensure inner menu elements occupy the expanded width */
+  .sidebar .toc,
+  .sidebar .toc__menu,
+  .sidebar nav {
+    width: 100% !important;
   }
 }
 
