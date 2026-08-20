@@ -22,20 +22,22 @@
     margin-right: auto !important;
 }
 
-/* --- Fixed Sticky Left Sidebar --- */
+/* --- Guaranteed Sticky Left Sidebar Layout --- */
 @media screen and (min-width: 64em) {
+  /* Force the parent container to allow sticky child positioning */
   #main {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start; /* Ensures columns respect alignment */
+    display: flex !important;
+    align-items: flex-start !important;
+    position: relative !important;
   }
 
   .sidebar {
     position: sticky !important;
     top: 2rem !important;
     align-self: flex-start !important;
-    max-height: calc(100vh - 4rem); /* Keeps it within the viewport height */
-    overflow-y: auto; /* Allows scrolling inside the TOC if it's too long */
+    max-height: calc(100vh - 4rem) !important;
+    overflow-y: auto !important;
+    z-index: 10;
   }
 }
 
