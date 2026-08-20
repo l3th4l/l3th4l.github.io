@@ -1,0 +1,59 @@
+---
+layout: default
+---
+
+{% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
+  {% include page__hero.html %}
+{% elsif page.header.video.id %}
+  {% include page__hero_video.html %}
+{% endif %}
+
+{% if page.url != "/" and site.breadcrumbs %}
+  {% unless page.hide_breadcrumbs %}
+    {% include breadcrumbs.html %}
+  {% endunless %}
+{% endif %}
+
+<div id="main" role="main">
+  <!-- LEFT SIDEBAR: Replaced author profile with auto-generated TOC -->
+  <div class="sidebar">
+    {% if page.toc %}
+      <nav class="nav__list">
+        <input id="ac-toc" name="accordion-toc" type="checkbox" />
+        <label for="ac-toc">{{ page.toc_label | default: site.ui_text.toc_label | default: "On this page" }}</label>
+        <div>
+          {% include toc.html html=content sanitize=true class="toc__menu" h_min=page.toc_min_level h_max=page.toc_max_level %}
+        </div>
+      </nav>
+    {% endif %}
+  </div>
+
+  <!-- MAIN POST CONTENT -->
+  <div class="archive">
+    {% unless page.title == nil %}
+      <h1 class="page__title" itemprop="headline">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>
+    {% endunless %}
+    
+    <div class="page__inner-wrap">
+      <section class="page__content" itemprop="text">
+        {{ content }}
+        {% if page.link %}<div><a href="{{ page.link }}" class="btn {{ site.data.ui-text[site.locale].btn_class | default: 'btn--primary' }}">{{ site.data.ui-text[site.locale].ext_link_label | default: 'Direct Link' }}</a></div>{% endif %}
+      </section>
+
+      <footer class="page__meta">
+        {% if site.data.ui-text[site.locale].meta_label %}
+          <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
+        {% endif %}
+        {% include page__taxonomy.html %}
+        {% include page_date.html %}
+      </footer>
+
+      {% if page.share %}{% include social-share.html %}{% endif %}
+      {% include post_pagination.html %}
+    </div>
+
+    {% if jekyll.environment == 'production' and site.comments.provider and page.comments %}
+      {% handle_comments %}
+    {% endif %}
+  </div>
+</div>
