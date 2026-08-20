@@ -15,7 +15,7 @@ layout: default
 {% endif %}
 
 <div id="main" role="main">
-  <!-- LEFT SIDEBAR: Replaced author profile with auto-generated TOC -->
+  <!-- LEFT SIDEBAR: Auto-generated TOC -->
   <div class="sidebar">
     {% if page.toc %}
       <nav class="nav__list">
@@ -52,8 +52,9 @@ layout: default
       {% include post_pagination.html %}
     </div>
 
+    <!-- COMMENTS SECTION (Fixed standard inclusion) -->
     {% if jekyll.environment == 'production' and site.comments.provider and page.comments %}
-      {% handle_comments %}
+      {% include comments.html %}
     {% endif %}
   </div>
 </div>
