@@ -22,13 +22,20 @@
     margin-right: auto !important;
 }
 
-/* Fix Left Sidebar Alignment & Sticky Behavior */
-.sidebar {
-  @include breakpoint($large) {
-    position: sticky;
-    top: 2rem;
-    height: fit-content;
-    align-self: flex-start; /* Required for sticky behavior inside flex layouts */
+/* --- Fixed Sticky Left Sidebar --- */
+@media screen and (min-width: 64em) {
+  #main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; /* Ensures columns respect alignment */
+  }
+
+  .sidebar {
+    position: sticky !important;
+    top: 2rem !important;
+    align-self: flex-start !important;
+    max-height: calc(100vh - 4rem); /* Keeps it within the viewport height */
+    overflow-y: auto; /* Allows scrolling inside the TOC if it's too long */
   }
 }
 
@@ -36,7 +43,6 @@
 .toc__menu {
   font-size: 0.85rem !important;
 
-  /* Target every sub-element to override theme scaling */
   li, ul, a, span {
     font-size: 0.85rem !important;
     font-weight: 400 !important;
