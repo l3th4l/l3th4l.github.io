@@ -161,11 +161,12 @@ For each guess $g$, we assume that it is a correct guess for $s(\alpha)$ and we 
 
 $$\begin{aligned} e_j(\alpha) & = b_j(\alpha) - a_j(\alpha)g \\
 &=b_j(\alpha) - a_j(\alpha)s(\alpha)\end{aligned}$$
-If our guess $g$, is correct, then the collection of error images $\left\{e_j(\alpha)\right\}$ follow the distribution $\phi_\alpha(\mathcal{N}_\sigma)$ 
+
+If our guess $g$, is correct, then the collection of error images $\{e_j(\alpha)\}$ follow the distribution $\phi_\alpha(\mathcal{N}_\sigma)$ 
 
 ## Verifying Membership of the Error Images in the Error Distribution
 
-Now that we have the images of our erros $\left\{e_j(\alpha)\right\}$, we must determine if the errors belong to the distribution our errors were originally sampled from, i.e. $\mathcal{N}_\sigma$. This gives us a way to determine if the pairs $(a_j(x), b_j(x))$ were generated from a Poly-LWE instance or are uniformly sampled from $R_q \times R_q$, which is only possible if out guess $g$ matches the image of the actual secret $s(\alpha)$. 
+Now that we have the images of our erros $\{e_j(\alpha)\}$, we must determine if the errors belong to the distribution our errors were originally sampled from, i.e. $\mathcal{N}_\sigma$. This gives us a way to determine if the pairs $(a_j(x), b_j(x))$ were generated from a Poly-LWE instance or are uniformly sampled from $R_q \times R_q$, which is only possible if out guess $g$ matches the image of the actual secret $s(\alpha)$. 
 
 To do this, we first compute the set $S$ of all possible values of $e(\alpha)$. Since $e(\alpha)$ is defined as 
 
