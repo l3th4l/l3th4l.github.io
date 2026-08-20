@@ -292,19 +292,19 @@ We want to define this as a function in sage, so that we can try repeating it wi
 
 ```python 
 def attack(samples, q, N, sigma, R_q, alpha, alpha_order, D):
+    
     S = generate_error_set(alpha, q, N, sigma, alpha_order)
     
-    for g in range(q):
-        # A guess 'g' is valid if every sample's error image falls within the set S
-        is_valid_guess = all(
-            R_q(list(b - g * a))(alpha) in S 
-            for a, b in samples
-        )
-        
-        if is_valid_guess:
-            return g
-            
-    return None
+    for g in range(0, q):
+        valid = True
+        for a, b in samples:
+            e1_alpha = R_q(list(b - g*a))(alpha)
+            if not(e1_alpha in S):
+                valid = False
+                break 
+        if valid:
+            return g  
+    return None 
 ```
 
 Performance Note: We make use of an early-exit pattern (break), this implementation skips checking remaining samples the moment a candidate secret guess $g$ produces an error image outside of $S$. Because the vast majority of guesses in $Z_q$ will fail, this optimization drastically reduces execution time, ensuring we don't waste CPU cycles testing invalid guesses against every single sample in our collection.
