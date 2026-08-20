@@ -1,6 +1,120 @@
 /* =========================================================
-   TOC STYLING
+   MINIMAL MISTAKES CUSTOM LAYOUT
    ========================================================= */
+
+
+/* ---------------------------------------------------------
+   MAIN PAGE LAYOUT
+   --------------------------------------------------------- */
+
+@media (min-width: 64em) {
+
+    /*
+     * Two-column layout:
+     *
+     *   |<------ remaining space ------>|<--- 950px --->|
+     *   |              TOC              |    ARTICLE    |
+     *
+     * The 1fr column automatically consumes all available
+     * space left after the 950px article and the gap.
+     */
+    .layout--single #main {
+        display: grid !important;
+
+        grid-template-columns: minmax(0, 1fr) 950px !important;
+        column-gap: 3rem !important;
+
+        /*
+         * Use the full available width rather than
+         * shrinking the grid to its contents.
+         */
+        width: 100% !important;
+        max-width: 1400px !important;
+
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+        align-items: start !important;
+    }
+
+
+    /* -----------------------------------------------------
+       SIDEBAR / TOC
+       ----------------------------------------------------- */
+
+    .layout--single #main .sidebar {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+
+        /*
+         * Keep the TOC visible while scrolling.
+         */
+        position: sticky !important;
+        top: 2rem !important;
+
+        /*
+         * Fill the ENTIRE first grid column.
+         */
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+
+        height: auto !important;
+        max-height: calc(100vh - 4rem) !important;
+
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+
+        align-self: start !important;
+
+        z-index: 10 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       ARTICLE
+       ----------------------------------------------------- */
+
+    .layout--single #main .page {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+
+        width: 950px !important;
+        max-width: 950px !important;
+
+        min-width: 0 !important;
+    }
+
+
+    .layout--single .page__content {
+        width: 950px !important;
+        max-width: 950px !important;
+    }
+
+
+    /* -----------------------------------------------------
+       TOC CONTAINER
+       ----------------------------------------------------- */
+
+    .layout--single .sidebar .toc,
+    .layout--single .sidebar .toc__menu,
+    .layout--single .sidebar nav {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+
+    .layout--single .sidebar .toc__menu a {
+        display: block !important;
+        width: 100% !important;
+    }
+}
+
+
+/* =========================================================
+   TOC TYPOGRAPHY
+   ========================================================= */
+
 .layout--single .toc__menu {
     font-size: 0.85rem !important;
 }
@@ -48,9 +162,6 @@
 }
 
 @media (min-width: 64em) {
-    .layout--single .page__content {
-        width: 950px !important;
-    }
 
     .layout--single .page__content p {
         font-size: 0.85em !important;
@@ -60,43 +171,14 @@
 
 
 /* =========================================================
-   STICKY SIDEBAR & WIDE LEFT LAYOUT
+   PREVENT THEME FROM CLIPPING OUR LAYOUT
    ========================================================= */
 
-@media screen and (min-width: 64em) {
+@media (min-width: 64em) {
+
     .initial-content,
     .layout--single,
     .layout--single #main {
         overflow: visible !important;
-    }
-
-    .layout--single #main {
-        display: flex !important;
-        align-items: flex-start !important;
-        position: relative !important;
-        gap: 2.5rem !important;
-    }
-
-    /* Target sidebar with high specificity to force width and stickiness */
-    body.layout--single .sidebar,
-    .layout--single #main .sidebar,
-    #main .sidebar {
-        position: sticky !important;
-        top: 2rem !important;
-        align-self: flex-start !important;
-        max-height: calc(100vh - 4rem) !important;
-        overflow-y: auto !important;
-        z-index: 10 !important;
-
-        /* Expanded width to fill out the left area (change 350px if needed) */
-        flex: 0 0 350px !important;
-        width: 350px !important;
-        min-width: 350px !important;
-    }
-
-    .sidebar .toc,
-    .sidebar .toc__menu,
-    .sidebar nav {
-        width: 100% !important;
     }
 }
