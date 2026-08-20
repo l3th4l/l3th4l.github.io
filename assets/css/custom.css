@@ -18,7 +18,7 @@
      */
     .layout--single #main {
         display: grid !important;
-        grid-template-columns: 280px 950px !important;
+        grid-template-columns: 1fr 950px !important;
         column-gap: 3rem !important;
 
         width: max-content !important;
