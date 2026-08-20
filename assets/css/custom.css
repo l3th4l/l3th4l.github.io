@@ -1,10 +1,25 @@
+/* =========================================================
+   Minimal Mistakes — Custom Layout
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   ARTICLE
+   --------------------------------------------------------- */
+
 .layout--single .page__content {
     background: inherit !important;
+    width: 950px !important;
+    max-width: 950px !important;
 }
 
+
+/* Desktop article sizing */
 @media (min-width: 64em) {
+
     .layout--single .page__content {
         width: 950px !important;
+        max-width: 950px !important;
     }
 
     .layout--single .page__content p {
@@ -12,6 +27,11 @@
         line-height: 1.7;
     }
 }
+
+
+/* ---------------------------------------------------------
+   MATHJAX
+   --------------------------------------------------------- */
 
 .page__content .MathJax_Display {
     text-align: center !important;
@@ -22,63 +42,141 @@
     margin-right: auto !important;
 }
 
-/* --- High-Specificity Override to Force Sticky Positioning & Wider Sidebar --- */
-@media screen and (min-width: 64em) {
-  .initial-content, 
-  .layout--single, 
-  #main {
-    overflow: visible !important;
-  }
 
-  #main {
-    display: flex !important;
-    align-items: flex-start !important;
-    position: relative !important;
-    gap: 3rem !important;
-  }
+/* ---------------------------------------------------------
+   SIDEBAR / TABLE OF CONTENTS
+   --------------------------------------------------------- */
 
-  /* Target with increased specificity to beat the theme */
-  body.layout--single .sidebar,
-  .layout--single #main .sidebar,
-  #main .sidebar {
-    position: sticky !important;
-    top: 2rem !important;
-    align-self: flex-start !important;
-    max-height: calc(100vh - 4rem) !important;
-    overflow-y: auto !important;
-    z-index: 10 !important;
+@media (min-width: 64em) {
 
-    /* Expand the width to fill the empty space */
-    flex: 0 0 300px !important; 
-    width: 300px !important;
-    min-width: 300px !important;
-  }
+    /*
+     * Keep the sidebar visible while scrolling.
+     */
+    .layout--single .sidebar {
+        position: sticky !important;
+        top: 2rem !important;
 
-  /* Ensure inner menu elements occupy the expanded width */
-  .sidebar .toc,
-  .sidebar .toc__menu,
-  .sidebar nav {
-    width: 100% !important;
-  }
+        align-self: flex-start !important;
+
+        /*
+         * Give the sidebar an actual width.
+         */
+        width: 280px !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+
+        /*
+         * Prevent the TOC from becoming constrained
+         * by the viewport height.
+         */
+        max-height: calc(100vh - 4rem) !important;
+        overflow-y: auto !important;
+
+        /*
+         * Don't let the sidebar disappear behind
+         * other page elements.
+         */
+        z-index: 10 !important;
+    }
+
+
+    /*
+     * Make the TOC itself use the full sidebar width.
+     */
+    .layout--single .sidebar .toc,
+    .layout--single .sidebar .toc__menu,
+    .layout--single .sidebar nav {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+
+    /*
+     * Prevent individual TOC links from imposing
+     * an unexpectedly narrow width.
+     */
+    .layout--single .sidebar .toc__menu a {
+        display: block !important;
+        width: 100% !important;
+    }
 }
 
-/* Force Uniform Font Sizes Across All TOC Levels */
-.toc__menu {
-  font-size: 0.85rem !important;
 
-  li, ul, a, span {
+/* ---------------------------------------------------------
+   TOC TYPOGRAPHY
+   --------------------------------------------------------- */
+
+.layout--single .toc__menu {
+    font-size: 0.85rem !important;
+}
+
+
+/* All TOC levels */
+.layout--single .toc__menu li,
+.layout--single .toc__menu ul,
+.layout--single .toc__menu a,
+.layout--single .toc__menu span {
     font-size: 0.85rem !important;
     font-weight: 400 !important;
     line-height: 1.4 !important;
-  }
+}
 
-  ul {
+
+/* Nested lists */
+.layout--single .toc__menu ul {
     padding-left: 1rem !important;
     margin-top: 0.3rem !important;
     margin-bottom: 0.3rem !important;
-  }
+}
 
-  li {
+
+/* Spacing between entries */
+.layout--single .toc__menu li {
     margin-bottom: 0.4rem !important;
-  }
+}
+
+
+/* ---------------------------------------------------------
+   LARGE DESKTOP — GIVE THE WHOLE PAGE MORE ROOM
+   --------------------------------------------------------- */
+
+@media (min-width: 80em) {
+
+    /*
+     * Allow the page container to accommodate:
+     *
+     *     280px TOC + 950px article
+     *
+     * without squeezing the sidebar.
+     */
+    .layout--single .initial-content,
+    .layout--single #main {
+        max-width: 1300px !important;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   VERY LARGE SCREENS
+   --------------------------------------------------------- */
+
+@media (min-width: 90em) {
+
+    .layout--single .initial-content,
+    .layout--single #main {
+        max-width: 1350px !important;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   PREVENT HORIZONTAL CLIPPING
+   --------------------------------------------------------- */
+
+@media (min-width: 64em) {
+
+    .layout--single #main,
+    .layout--single .initial-content {
+        overflow: visible !important;
+    }
 }
