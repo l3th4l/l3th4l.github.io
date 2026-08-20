@@ -59,12 +59,15 @@
 }
 
 
+
+
 /* =========================================================
-   STICKY SIDEBAR & WIDE LEFT LAYOUT
+   STICKY SIDEBAR & WIDE LEFT LAYOUT (Restricted to .layout--single)
    ========================================================= */
 
 @media screen and (min-width: 64em) {
-    .initial-content,
+    /* Only apply these layout changes when layout--single is active */
+    .layout--single.initial-content,
     .layout--single,
     .layout--single #main {
         overflow: visible !important;
@@ -77,10 +80,9 @@
         gap: 2.5rem !important;
     }
 
-    /* Target sidebar with high specificity to force width and stickiness */
+    /* Target sidebar ONLY inside layout--single */
     body.layout--single .sidebar,
-    .layout--single #main .sidebar,
-    #main .sidebar {
+    .layout--single #main .sidebar {
         position: sticky !important;
         top: 2rem !important;
         align-self: flex-start !important;
@@ -88,15 +90,14 @@
         overflow-y: auto !important;
         z-index: 10 !important;
 
-        /* Expanded width to fill out the left area (change 350px if needed) */
         flex: 0 0 350px !important;
         width: 350px !important;
         min-width: 350px !important;
     }
 
-    .sidebar .toc,
-    .sidebar .toc__menu,
-    .sidebar nav {
+    .layout--single .sidebar .toc,
+    .layout--single .sidebar .toc__menu,
+    .layout--single .sidebar nav {
         width: 100% !important;
     }
 }
