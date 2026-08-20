@@ -29,6 +29,27 @@ $footer-text-color: #565f89;
 $code-background-color: #16161e;
 $code-text-color: #c0caf5;
 
+/* --- OBSIDIAN-STYLE TOKYO NIGHT HEADERS --- */
+.page__content {
+  h1 {
+    color: #ff9e64 !important; // Vibrant Orange
+    border-bottom-color: #24283b !important;
+  }
+  
+  h2 {
+    color: #e0af68 !important; // Warm Yellow/Gold
+    border-bottom-color: #24283b !important;
+  }
+  
+  h3 {
+    color: #7dcfff !important; // Soft Cyan
+  }
+  
+  h4, h5, h6 {
+    color: #bb9af7 !important; // Soft Purple
+  }
+}
+
 // Rouge token overrides for Tokyo Night
 .highlight {
   background: $code-background-color;
