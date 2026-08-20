@@ -21,3 +21,29 @@
     margin-left: auto !important;
     margin-right: auto !important;
 }
+
+/* Fix Left Sidebar TOC Appearance and Stickiness */
+.sidebar {
+  @include breakpoint($large) {
+    position: sticky;
+    top: 2em;
+    height: fit-content;
+  }
+}
+
+.toc__menu {
+  font-size: 0.85rem !important; // Makes font size uniform and readable
+  line-height: 1.5;
+  
+  a {
+    color: inherit;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  li {
+    list-style-type: none;
+    margin-bottom: 0.5rem;
+  }
+}
