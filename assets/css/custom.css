@@ -1,135 +1,26 @@
- /* =========================================================
-    MINIMAL MISTAKES CUSTOM LAYOUT
-    ========================================================= */
-
-
-/* ---------------------------------------------------------
-   MAIN PAGE LAYOUT — SINGLE POSTS ONLY
-   --------------------------------------------------------- */
-
-@media (min-width: 64em) {
-
-    /*
-     * Only apply this layout to actual single-post pages.
-     *
-     * The homepage/profile remains untouched.
-     *
-     *   |<--------- remaining space --------->|<-- 950px -->|
-     *   |                 TOC                |   ARTICLE    |
-     */
-    body.layout--single #main {
-        display: grid !important;
-
-        grid-template-columns: minmax(0, 1fr) 950px !important;
-        column-gap: 3rem !important;
-
-        width: 100% !important;
-        max-width: 1400px !important;
-
-        margin-left: auto !important;
-        margin-right: auto !important;
-
-        align-items: start !important;
-    }
-
-
-    /* -----------------------------------------------------
-       SIDEBAR / TOC
-       ----------------------------------------------------- */
-
-    body.layout--single #main .sidebar {
-        grid-column: 1 !important;
-        grid-row: 1 !important;
-
-        /*
-         * Keep the TOC visible while scrolling.
-         */
-        position: sticky !important;
-        top: 2rem !important;
-
-        /*
-         * Fill the entire first grid column.
-         */
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: none !important;
-
-        height: auto !important;
-        max-height: calc(100vh - 4rem) !important;
-
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
-
-        align-self: start !important;
-
-        z-index: 10 !important;
-    }
-
-
-    /* -----------------------------------------------------
-       ARTICLE
-       ----------------------------------------------------- */
-
-    body.layout--single #main .page {
-        grid-column: 2 !important;
-        grid-row: 1 !important;
-
-        width: 950px !important;
-        max-width: 950px !important;
-
-        min-width: 0 !important;
-    }
-
-
-    body.layout--single .page__content {
-        width: 950px !important;
-        max-width: 950px !important;
-    }
-
-
-    /* -----------------------------------------------------
-       TOC CONTAINER
-       ----------------------------------------------------- */
-
-    body.layout--single .sidebar .toc,
-    body.layout--single .sidebar .toc__menu,
-    body.layout--single .sidebar nav {
-        width: 100% !important;
-        max-width: none !important;
-    }
-
-
-    body.layout--single .sidebar .toc__menu a {
-        display: block !important;
-        width: 100% !important;
-    }
-}
-
-
 /* =========================================================
-   TOC TYPOGRAPHY
+   TOC STYLING
    ========================================================= */
-
-body.layout--single .toc__menu {
+.layout--single .toc__menu {
     font-size: 0.85rem !important;
 }
 
-body.layout--single .toc__menu li,
-body.layout--single .toc__menu ul,
-body.layout--single .toc__menu a,
-body.layout--single .toc__menu span {
+.layout--single .toc__menu li,
+.layout--single .toc__menu ul,
+.layout--single .toc__menu a,
+.layout--single .toc__menu span {
     font-size: 0.85rem !important;
     font-weight: 400 !important;
     line-height: 1.4 !important;
 }
 
-body.layout--single .toc__menu ul {
+.layout--single .toc__menu ul {
     padding-left: 1rem !important;
     margin-top: 0.3rem !important;
     margin-bottom: 0.3rem !important;
 }
 
-body.layout--single .toc__menu li {
+.layout--single .toc__menu li {
     margin-bottom: 0.4rem !important;
 }
 
@@ -152,13 +43,16 @@ body.layout--single .toc__menu li {
    ARTICLE TEXT
    ========================================================= */
 
-body.layout--single .page__content {
+.layout--single .page__content {
     background: inherit !important;
 }
 
 @media (min-width: 64em) {
+    .layout--single .page__content {
+        width: 950px !important;
+    }
 
-    body.layout--single .page__content p {
+    .layout--single .page__content p {
         font-size: 0.85em !important;
         line-height: 1.7;
     }
@@ -166,13 +60,43 @@ body.layout--single .page__content {
 
 
 /* =========================================================
-   PREVENT THEME FROM CLIPPING — SINGLE POSTS ONLY
+   STICKY SIDEBAR & WIDE LEFT LAYOUT
    ========================================================= */
 
-@media (min-width: 64em) {
-
-    body.layout--single .initial-content,
-    body.layout--single #main {
+@media screen and (min-width: 64em) {
+    .initial-content,
+    .layout--single,
+    .layout--single #main {
         overflow: visible !important;
+    }
+
+    .layout--single #main {
+        display: flex !important;
+        align-items: flex-start !important;
+        position: relative !important;
+        gap: 2.5rem !important;
+    }
+
+    /* Target sidebar with high specificity to force width and stickiness */
+    body.layout--single .sidebar,
+    .layout--single #main .sidebar,
+    #main .sidebar {
+        position: sticky !important;
+        top: 2rem !important;
+        align-self: flex-start !important;
+        max-height: calc(100vh - 4rem) !important;
+        overflow-y: auto !important;
+        z-index: 10 !important;
+
+        /* Expanded width to fill out the left area (change 350px if needed) */
+        flex: 0 0 350px !important;
+        width: 350px !important;
+        min-width: 350px !important;
+    }
+
+    .sidebar .toc,
+    .sidebar .toc__menu,
+    .sidebar nav {
+        width: 100% !important;
     }
 }
