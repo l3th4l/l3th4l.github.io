@@ -22,9 +22,15 @@
     margin-right: auto !important;
 }
 
-/* --- Guaranteed Sticky Left Sidebar Layout --- */
+/* --- Fix Ancestor Overflow & Force Sticky Positioning --- */
 @media screen and (min-width: 64em) {
-  /* Force the parent container to allow sticky child positioning */
+  /* Prevent parent containers from trapping or clipping the sticky element */
+  .initial-content, 
+  .layout--single, 
+  #main {
+    overflow: visible !important;
+  }
+
   #main {
     display: flex !important;
     align-items: flex-start !important;
