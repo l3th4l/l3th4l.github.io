@@ -6,7 +6,7 @@ tags:
   - Cryptography
   - LWE
   - FHE
-date: 2026-04-18T15:34:30-04:00
+date: 2026-08-18T15:34:30-04:00
 ---
 One of the fundamental hard problems in modern Post-Quantum Cryptography is Learning With Errors (LWE). Poly-LWE adds algebraic structure to the LWE problem by substituting the vectors in LWE with polynomials. However, this also induces the potential risk of being vulnerable to attacks exploiting its algebraic structure. 
 
@@ -67,7 +67,7 @@ f(x) ={}& x^4 - 13783770x^3 + 233945232486523x^2 \\
 
 Which factorizes completely mod $q$ into: 
 
-$$f(x) = (x-13783770)(x-8774745)(x-5009025)(x-1) \pmod{q}$$
+$$f(x) \equiv (x-13783770)(x-8774745)(x-5009025)(x-1) \pmod{q}$$
 
 It is clear from this expression that $13783770, 8774745, 5009025$ and $1$ are roots of $f(x)$. Let's define this in our `sagemath` code:
 
@@ -81,7 +81,7 @@ N = 4 #degree of the polynomial
 f = x^4 - 13783770*x^3 + 233945232486523*x^2 - 605837133717152552775*x + 605836899771878714937
 ```
 
-For the noise sampler, we would be going with a Discrete Gaussian Sampler with mean $0$, and the variance $\sigma = 3$. With the parameters now defined, we could create the Poly-LWE instance as follows: 
+For the noise sampler, we would be going with a Discrete Gaussian Sampler with mean $0$, and the variance $\sigma = 3$. Let us use $\mathcal{N}_\sigma$ to denote this distribution. With the parameters now defined, we could create the Poly-LWE instance as follows: 
 
 ```python 
 from sage.crypto.lwe import RingLWE, DiscreteGaussianDistributionPolynomialSampler
@@ -124,12 +124,20 @@ order of the root 1 : 1
 
 # Attack Setup 
 
-The attack proceeds in the following four stages:
+Before we proceed with our attack, we need to draw $m$ samples of the pairs $(a_j(x), b_j(x))$ from our oracle. To generate a single sample we can simply call our `PolyLWEInstance` : 
+
+```python
+m = 20
+
+samples = [PolyLWEInstance() for _ in range(m)]
+```
+
+The attack then proceeds in the following four stages:
 
 1. Transfer the problem from $R_q$ to $\mathbb{Z}_q$ via a ring homomorphism $\phi:R_q \rightarrow \mathbb{Z}_q$.
 2. Loop through the guesses for the possible images $\phi(s(x))$ of the secret.
-3. Assuming that the guess at hand is correct, compute image of the error polynomials $\phi(e_i(x))$.
-4. Examime the distribution of $\phi(e_i(x))$ to determine if it matches the distribution the errors are sampled from or not.
+3. Assuming that the guess at hand is correct, compute image of the error polynomials $\phi(e_j(x))$.
+4. Examime the distribution of $\phi(e_j(x))$ to determine if it matches the distribution the errors are sampled from or not.
 
 In the next section ([Recovering the Complete Secret with Lagrange Interpolation](#recover)), we extend this further to enable recovery of the complete secret. 
 
@@ -140,6 +148,16 @@ The first step of our attack requires us to find a ring homomorphism from $R_q$ 
 Given $f(x)$ has no double roots, we specify a root $\alpha = \alpha_i$, where $\alpha_i$ for $i=0, 1, ..., n-1$ are roots of $f(x)$. We define the evaluation homomorphism as : 
 
 $$\phi_{\alpha} : R_q \rightarrow \mathbb{Z}_q \; \; ,  \phi_\alpha(g) = g(\alpha)$$
+
+We then apply this homomorphism to the coordinates of the $m$ samples $(a_j(x),b_j(x))$, giving us $(a_j(\alpha),b_j(\alpha))_{j=1,...,m}$.
+
+## Looping Through the Guesses of the Secret and Computing the Image of the Error
+
+We combine step 2. and 3. since every guess for the secret's image yields a corresponding image of the error in a very straightforward manner.
+
+We loop through all the possible values of $g\in\mathbb{Z}_q$, where each $g$ is considered to be a guess for the image of the secret $s(\alpha)$, i.e., $g=s(\alpha)$
+
+
 
 # Recovering the Complete Secret with Lagrange Interpolation
 {: #recover}
