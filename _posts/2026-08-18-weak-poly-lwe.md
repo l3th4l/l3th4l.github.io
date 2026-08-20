@@ -176,13 +176,87 @@ Since $\alpha$ is a root of small order $r$ modulo $q$ by assumption, i.e., $\al
 
 ### Case 1: $n$ is divisible by $r$
 
-Here, calculating $e(\alpha)$ is pretty straightforward.
+Here, calculating $e(\alpha)$ is pretty straightforward. 
 
-$$e(\alpha) = $$
+$$\begin{aligned}e(\alpha) ={}& (e_0 + e_r + e_{2r}+...) + \alpha (e_1 + e_{r+1} + e_{2r+1}+...) \\&+ ...+ \alpha^{r-1}(e_{r-1} + e_{2r-1} + e_{3r-1}+...)\end{aligned}$$
 
+where each of the coeffecients of $\alpha ^ i$ is $(e_i + e_{i+r}+e_{2i+r}+e_{3i+r}+...e_{n-r+j})$ 
 ### Case 2: $n$ is not divisible by $r$
 
+When $r$ does not divide $n$, then the first $k$ coefficients of $\alpha^i$ have one extra term than the last $r-k$ coefficients.
 
+We can find $k$ by taking $n \pmod{r}$ and let $q = \lfloor n/r \rfloor$ be the quotient. Then we can compute $e(\alpha)$ as:
+
+$$\begin{aligned} e(\alpha) ={}& \sum_{i=0}^{k-1} \alpha^i \left( \sum_{j=0}^{q} e_{i + j \cdot r} \right) + \sum_{i=k}^{r-1} \alpha^i \left( \sum_{j=0}^{q-1} e_{i + j \cdot r} \right) \end{aligned}$$
+
+**Explanation of the terms:**
+
+- **For the first $k$ groups** (corresponding to powers $\alpha^0, \alpha^1, \dots, \alpha^{k-1}$), the index goes up to $q$, meaning each coefficient contains $q + 1$ terms:
+    
+	$$e_i + e_{i+r} + e_{i+2r} + \dots + e_{i + q \cdot r}$$
+    
+- **For the remaining $r-k$ groups** (corresponding to powers $\alpha^k, \dots, \alpha^{r-1}$), the index stops at $q-1$, meaning each coefficient contains $q$ terms:
+    
+    $$e_i + e_{i+r} + e_{i+2r} + \dots + e_{i + (q-1) \cdot r}$$
+
+We can write a function to compute the set $S$ as follows:
+
+```python
+import math
+
+def generate_error_sums(n, sigma, truncate_limit, q, r):
+    max_val = int(math.ceil(truncate_limit * sigma))
+    possible_values = range(-max_val, max_val + 1)
+
+    q_quotient = n // r
+    k = n % r
+    
+    # Case 1: If n is divisible by r, all groups have length q_quotient
+    # Case 2: If not divisible, the 'long' groups have length q_quotient + 1
+    long_len = q_quotient + 1 if k != 0 else q_quotient
+
+    # Using set comprehensions makes this faster and more Pythonic
+    sums_long = list({
+        sum(vector(Zmod(q), vec)) 
+        for vec in cart(possible_values, repeat=long_len)
+    })
+
+    sums_short = []
+    if k != 0:
+        sums_short = list({
+            sum(vector(Zmod(q), vec)) 
+            for vec in cart(possible_values, repeat=q_quotient)
+        })
+
+    return sums_long, sums_short
+
+def generate_error_set(alpha, q, n, sigma, r):
+    # Generate [1, alpha, alpha^2, ..., alpha^{min(n,r)-1}]
+    alpha_is = vector(Zmod(q), [pow(alpha, i, q) for i in range(min(n, r))])
+
+    k = n % r
+
+    # s1 corresponds to the groups with an extra term, s2 to the rest
+    s1, s2 = generate_error_sums(n, sigma, 4, q, r)
+
+    if k == 0:
+        # Case 1: n is divisible by r. All r groups are identical in length.
+        possible_coefficients = [s1] * r
+    else:
+        # Case 2: n is not divisible by r. 
+        # The first k coefficients have the extra term (s1).
+        # The remaining r-k coefficients have one fewer term (s2).
+        possible_coefficients = [s1] * k + [s2] * (r - k)
+
+    # Compute all possible values of e(alpha)
+    return {
+        alpha_is * vector(coeffs) 
+        for coeffs in cart(*possible_coefficients)
+    }
+```
+
+**Note:** While the attack works on paper, pushing the order past $r > 5$ makes generating the group sums using the Cartesian product (`cart`) computationally impossible. The sheer volume of combinations causes your script to instantly run out of memory or hang indefinitely. This is the primary bottleneck of this attack.
+{: .notice--warning}
 # Recovering the Complete Secret with Lagrange Interpolation
 {: #recover}
 
