@@ -50,4 +50,19 @@ $code-text-color: #c0caf5;
   .o, .ow { color: #89ddff; }
 }
 
+// --- FIX TOC CHILD HIGHLIGHTING ---
+.toc {
+  // Reset the default background cascade on list items
+  li.active {
+    background: transparent !important;
+  }
+  
+  // Only highlight the exact link/anchor that is currently active
+  li.active > a {
+    background-color: $card-background-color; // Or use another subtle color like #24283b
+    font-weight: bold;
+    border-left: 3px solid $primary-color;
+  }
+}
+
 @import "minimal-mistakes";
