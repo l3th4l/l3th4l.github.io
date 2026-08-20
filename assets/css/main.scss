@@ -51,17 +51,34 @@ $code-text-color: #c0caf5;
 }
 
 // --- FIX TOC CHILD HIGHLIGHTING ---
+
 .toc {
-  // Reset the default background cascade on list items
-  li.active {
+  // Clear any default background on all list items
+  li {
     background: transparent !important;
+    border: none !important;
   }
   
-  // Only highlight the exact link/anchor that is currently active
+  // Only style the exact link/anchor that has the active class
   li.active > a {
-    background-color: $card-background-color; // Or use another subtle color like #24283b
+    background-color: $card-background-color;
     font-weight: bold;
     border-left: 3px solid $primary-color;
+  }
+
+  // Force nested (child) list items inside an active parent to stay transparent/unhighlighted
+  li li.active > a,
+  li li > a {
+    background-color: transparent !important;
+    border-left: none !important;
+    font-weight: normal;
+  }
+
+  // Except if the child *itself* is the actively viewed item
+  li li.active > a {
+    background-color: $card-background-color !important;
+    font-weight: bold !important;
+    border-left: 3px solid $primary-color !important;
   }
 }
 
