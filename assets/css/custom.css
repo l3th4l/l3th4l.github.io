@@ -22,9 +22,8 @@
     margin-right: auto !important;
 }
 
-/* --- Fix Ancestor Overflow & Force Sticky Positioning --- */
+/* --- High-Specificity Override to Force Sticky Positioning --- */
 @media screen and (min-width: 64em) {
-  /* Prevent parent containers from trapping or clipping the sticky element */
   .initial-content, 
   .layout--single, 
   #main {
@@ -37,13 +36,16 @@
     position: relative !important;
   }
 
-  .sidebar {
+  /* Target with increased specificity to beat the theme */
+  body.layout--single .sidebar,
+  .layout--single #main .sidebar,
+  #main .sidebar {
     position: sticky !important;
     top: 2rem !important;
     align-self: flex-start !important;
     max-height: calc(100vh - 4rem) !important;
     overflow-y: auto !important;
-    z-index: 10;
+    z-index: 10 !important;
   }
 }
 
