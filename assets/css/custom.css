@@ -22,28 +22,38 @@
     margin-right: auto !important;
 }
 
-/* Fix Left Sidebar TOC Appearance and Stickiness */
+
+
+/* Fix Left Sidebar Alignment & Sticky Behavior */
 .sidebar {
   @include breakpoint($large) {
     position: sticky;
-    top: 2em;
+    top: 2rem;
     height: fit-content;
   }
 }
 
+/* Force Uniform Font Sizes Across All TOC Levels */
 .toc__menu {
-  font-size: 0.85rem !important; // Makes font size uniform and readable
-  line-height: 1.5;
-  
+  font-size: 0.85rem !important;
+
   a {
-    color: inherit;
-    &:hover {
-      text-decoration: underline;
-    }
+    font-size: 0.85rem !important;
+    font-weight: 400 !important;
+    line-height: 1.4;
   }
 
   li {
-    list-style-type: none;
+    font-size: 0.85rem !important;
+    margin-bottom: 0.4rem;
+  }
+
+  ul {
+    font-size: 0.85rem !important;
+    padding-left: 1rem;
+    margin-top: 0.4rem;
+  }
+}    list-style-type: none;
     margin-bottom: 0.5rem;
   }
 }

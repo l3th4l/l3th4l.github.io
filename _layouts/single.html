@@ -15,15 +15,13 @@ layout: default
 {% endif %}
 
 <div id="main" role="main">
-<!-- LEFT SIDEBAR: Properly styled and sticky TOC -->
+  <!-- LEFT SIDEBAR: Clean layout container -->
   <div class="sidebar">
     {% if page.toc %}
-      <div class="sidebar__right sticky"> <!-- Reusing theme's sticky sidebar layout classes -->
-        <nav class="toc">
-          <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> {{ page.toc_label | default: "On this page" }}</h4></header>
-          {% include toc.html html=content sanitize=true class="toc__menu" h_min=page.toc_min_level h_max=page.toc_max_level %}
-        </nav>
-      </div>
+      <nav class="toc">
+        <header><h4 class="nav__title"><i class="fas fa-fw fa-file-alt" aria-hidden="true"></i> {{ page.toc_label | default: "On this page" }}</h4></header>
+        {% include toc.html html=content sanitize=true class="toc__menu" h_min=page.toc_min_level h_max=page.toc_max_level %}
+      </nav>
     {% endif %}
   </div>
 
@@ -45,7 +43,6 @@ layout: default
         {% endif %}
         {% include page__taxonomy.html %}
         
-        <!-- Safe Fallback Date Display -->
         {% if page.date %}
           <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></p>
         {% endif %}
