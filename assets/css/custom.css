@@ -1,33 +1,28 @@
-/* =========================================================
-   MINIMAL MISTAKES CUSTOM LAYOUT
-   ========================================================= */
+ /* =========================================================
+    MINIMAL MISTAKES CUSTOM LAYOUT
+    ========================================================= */
 
 
 /* ---------------------------------------------------------
-   MAIN PAGE LAYOUT
+   MAIN PAGE LAYOUT — SINGLE POSTS ONLY
    --------------------------------------------------------- */
 
 @media (min-width: 64em) {
 
     /*
-     * Two-column layout:
+     * Only apply this layout to actual single-post pages.
      *
-     *   |<------ remaining space ------>|<--- 950px --->|
-     *   |              TOC              |    ARTICLE    |
+     * The homepage/profile remains untouched.
      *
-     * The 1fr column automatically consumes all available
-     * space left after the 950px article and the gap.
+     *   |<--------- remaining space --------->|<-- 950px -->|
+     *   |                 TOC                |   ARTICLE    |
      */
-    .layout--single #main {
+    body.layout--single #main {
         display: grid !important;
 
         grid-template-columns: minmax(0, 1fr) 950px !important;
         column-gap: 3rem !important;
 
-        /*
-         * Use the full available width rather than
-         * shrinking the grid to its contents.
-         */
         width: 100% !important;
         max-width: 1400px !important;
 
@@ -42,7 +37,7 @@
        SIDEBAR / TOC
        ----------------------------------------------------- */
 
-    .layout--single #main .sidebar {
+    body.layout--single #main .sidebar {
         grid-column: 1 !important;
         grid-row: 1 !important;
 
@@ -53,7 +48,7 @@
         top: 2rem !important;
 
         /*
-         * Fill the ENTIRE first grid column.
+         * Fill the entire first grid column.
          */
         width: 100% !important;
         min-width: 0 !important;
@@ -75,7 +70,7 @@
        ARTICLE
        ----------------------------------------------------- */
 
-    .layout--single #main .page {
+    body.layout--single #main .page {
         grid-column: 2 !important;
         grid-row: 1 !important;
 
@@ -86,7 +81,7 @@
     }
 
 
-    .layout--single .page__content {
+    body.layout--single .page__content {
         width: 950px !important;
         max-width: 950px !important;
     }
@@ -96,15 +91,15 @@
        TOC CONTAINER
        ----------------------------------------------------- */
 
-    .layout--single .sidebar .toc,
-    .layout--single .sidebar .toc__menu,
-    .layout--single .sidebar nav {
+    body.layout--single .sidebar .toc,
+    body.layout--single .sidebar .toc__menu,
+    body.layout--single .sidebar nav {
         width: 100% !important;
         max-width: none !important;
     }
 
 
-    .layout--single .sidebar .toc__menu a {
+    body.layout--single .sidebar .toc__menu a {
         display: block !important;
         width: 100% !important;
     }
@@ -115,26 +110,26 @@
    TOC TYPOGRAPHY
    ========================================================= */
 
-.layout--single .toc__menu {
+body.layout--single .toc__menu {
     font-size: 0.85rem !important;
 }
 
-.layout--single .toc__menu li,
-.layout--single .toc__menu ul,
-.layout--single .toc__menu a,
-.layout--single .toc__menu span {
+body.layout--single .toc__menu li,
+body.layout--single .toc__menu ul,
+body.layout--single .toc__menu a,
+body.layout--single .toc__menu span {
     font-size: 0.85rem !important;
     font-weight: 400 !important;
     line-height: 1.4 !important;
 }
 
-.layout--single .toc__menu ul {
+body.layout--single .toc__menu ul {
     padding-left: 1rem !important;
     margin-top: 0.3rem !important;
     margin-bottom: 0.3rem !important;
 }
 
-.layout--single .toc__menu li {
+body.layout--single .toc__menu li {
     margin-bottom: 0.4rem !important;
 }
 
@@ -157,13 +152,13 @@
    ARTICLE TEXT
    ========================================================= */
 
-.layout--single .page__content {
+body.layout--single .page__content {
     background: inherit !important;
 }
 
 @media (min-width: 64em) {
 
-    .layout--single .page__content p {
+    body.layout--single .page__content p {
         font-size: 0.85em !important;
         line-height: 1.7;
     }
@@ -171,14 +166,13 @@
 
 
 /* =========================================================
-   PREVENT THEME FROM CLIPPING OUR LAYOUT
+   PREVENT THEME FROM CLIPPING — SINGLE POSTS ONLY
    ========================================================= */
 
 @media (min-width: 64em) {
 
-    .initial-content,
-    .layout--single,
-    .layout--single #main {
+    body.layout--single .initial-content,
+    body.layout--single #main {
         overflow: visible !important;
     }
 }

@@ -292,22 +292,23 @@ We want to define this as a function in sage, so that we can try repeating it wi
 
 ```python 
 def attack(samples, q, N, sigma, R_q, alpha, alpha_order, D):
-    
     S = generate_error_set(alpha, q, N, sigma, alpha_order)
     
-    for g in range(0, q):
+    for g in range(q):
         valid = True
         for a, b in samples:
-            e1_alpha = R_q(list(b - g*a))(alpha)
-            if not(e1_alpha in S):
+            e1_alpha = R_q(list(b - g * a))(alpha)
+            if e1_alpha not in S:
                 valid = False
-                break 
+                break  # Early break: sample failed the error check
+                
         if valid:
-            return g  
-    return None 
+            return g  # Early return: found the matching secret image
+            
+    return None
 ```
 
-Performance Note: We make use of an early-exit pattern (break), this implementation skips checking remaining samples the moment a candidate secret guess $g$ produces an error image outside of $S$. Because the vast majority of guesses in $Z_q$ will fail, this optimization drastically reduces execution time, ensuring we don't waste CPU cycles testing invalid guesses against every single sample in our collection.
+Performance Note: This implementation also uses an **early return (`return g`)** on the outer loop. Given a sufficient number of samples, the probability that an incorrect guess $g$ will accidentally satisfy the error distribution check across _every single sample_ drops to virtually zero. However, do not that if your sample size is small, this would give you incorrect results. 
 {: .notice--info}
 # Recovering the Complete Secret with Lagrange Interpolation
 {: #recover}
