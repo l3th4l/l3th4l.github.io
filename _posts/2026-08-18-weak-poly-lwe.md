@@ -105,19 +105,17 @@ f_q = R_q(f) #taking f(x) mod q
 roots = [r[0] for r in f_q.roots()]
 ```
 
-We could also verify for ourselves that all the roots of $f(x)\pmod{q}$ are low-order (i.e. $<< q$) as follows:
+Let us also get the order of all the roots (this would help us later). We could also verify for ourselves that all the roots of $f(x)\pmod{q}$ are low-order (i.e. $<< q$) as follows:
 
 ```python  
-for r in roots:
-    print(f"order of the root {r} : {r.multiplicative_order()}")
+root_orders = [r.multiplicative_order() for r in roots]
+
+print(f"order of the roots: {root_orders}")
 ```
 
 **Output:**
 ```
-order of the root 13783770 : 2
-order of the root 8774745 : 3
-order of the root 5009025 : 3
-order of the root 1 : 1
+order of the roots: [2, 3, 3, 1]
 ```
 
 # Decision and Search Poly-LWE problem 
@@ -313,11 +311,86 @@ Performance Note: This implementation also uses an **early return (`return g`)**
 # Recovering the Complete Secret with Lagrange Interpolation
 {: #recover}
 
-# Generating Weak Rings
-{: #polygen}
+Now that we can recover the image of the secret with respect to root $\alpha_i$, we do it for all the $n$ roots 
 
+```python
+secret_images = [] 
+for root, root_order in zip(roots, root_orders):
+    s_alpha = attack(samples, q, N, sigma, R_q, root, root_order, D)	
+    secret_images.append(s_alpha)
+
+    print(f"secret found for root {root} : {s_alpha}")
+
+```
+
+**Output:**
+```
+secret found for root 13783770 : 12614025
+secret found for root 8774745 : 4358721
+secret found for root 5009025 : 1865108
+secret found for root 1 : 1063299
+```
+
+We have successfully computed the evaluations of our secret polynomial $s(x)$ at $n$ distinct points (at the roots $\alpha_i$), giving us pairs of coordinates : $(\alpha_i, s(\alpha_i))$.
+
+Because the degree of our secret polynomial $s(x)$ is strictly less than the number of roots we've evaluated, we can treat this as a standard curve-fitting problem. Lagrange Interpolation allows us to uniquely reconstruct the original secret polynomial coefficients from these evaluation points over $\mathbb{Z}_q$. 
+
+**Note:** We do not explain Lagrange Interpolation in this article, however, there is [this](https://youtu.be/bzp_q7NDdd4?si=ir2xVZqejfW8k-PF) video on the YouTube, explaining it in a very intuitive manner
+{: .notice--info}
+
+We first define a function to calculate the lagrange basis polynomial for the point $x_k = \alpha_i$:
+
+```python 
+def lagrange_polynomial(xs, xk, modulo=None):
+    assert modulo is not None, "A modulus must be specified."
+
+    F = GF(modulo)
+    R = PolynomialRing(F, 'x')
+    x = R.gen()
+
+    basis_poly = 1
+    for xi in xs:
+        if xi != xk:
+            numerator = x - xi
+            denominator = F(xk - xi)
+            # Sage automatically handles the modular inverse via division in GF(q)
+            basis_poly *= numerator / denominator
+            
+    return basis_poly
+```
+
+The next step is to use this to compute our secret polynomial using Lagrange Interpolation. We define a function for that as 
+
+```python 
+def reconstruct_polynomial(xs, ys, degree, modulo=None):
+    assert modulo is not None, "A modulus must be specified."
+    assert len(xs) == len(ys), "Mismatch between number of x-coordinates and y-coordinates."
+    assert len(xs) >= degree, "Not enough evaluation points for the given degree."
+
+    # Sum up: y_i * l_i(x) across all points
+    return sum(yi * lagrange_polynomial(xs, xi, modulo=modulo) for xi, yi in zip(xs, ys))
+```
+
+We can now recover our secret polynomial with 
+
+```python 
+rec = reconstruct_polynomial(roots, secret_images, N, modulo = q)
+print (f"reconstructed secret polynomial : {rec}")
+```
+
+**Output:**
+```
+reonstructed secret polynomial : 1668982*x^3 + 1484011*x^2 + 6339426*x + 5354651
+```
+
+Voila! There we have it ! :) 
+
+However, as mentioned before, since sage's `RingLWE` class doesn't reveal it's secret, to verify this, we need to make some changes as mentioned in the next section. Do note that since we've covered all the parts of our attack, the next two sections are completely optional.
 # Modifying Sagemath's Ring-LWE Oracle to Verify the Secret
 {: #modi}
+
+# Generating Weak Rings
+{: #polygen}
 
 # References
 

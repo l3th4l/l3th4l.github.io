@@ -83,7 +83,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "7a020f9f511c0616",
@@ -185,11 +186,15 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "vault-2-book:Obsidian 2 Book: Generate a book from a specified folder": false
     }
   },
   "active": "83e06eb5acc8244b",
   "lastOpenFiles": [
+    "2026-08-20.md",
+    "2026-08-18-weak-poly-lwe.md",
+    "_posts_book.md",
     "2010-01-07-post-standard.md",
     "2019-04-18-welcome-to-jekyll.md",
     "2010-01-07-post-modified.md",
@@ -197,7 +202,6 @@
     "2010-02-05-post-notice.md",
     "2010-02-05-post-quote.md",
     "2010-03-07-post-link.md",
-    "2026-08-18-weak-poly-lwe.md",
     "Untitled.base"
   ]
 }
