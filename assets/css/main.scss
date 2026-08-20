@@ -1,14 +1,31 @@
 
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+// --- TOKYO NIGHT COLOR SCHEME ---
+$background-color: #1a1b26;        // Deep dark blue-black
+$archive-background-color: #1a1b26;
+$text-color: #c0caf5;            // Soft light blue-gray for body text
+$muted-text-color: #565f89;      // Slate gray for secondary text
+$primary-color: #7aa2f7;         // Tokyo Night Blue (Links, buttons)
+$link-color: #7aa2f7;
+$link-color-hover: #bb9af7;      // Soft purple on hover
+$link-color-visited: #bb9af7;
+
+// Borders & Cards
+$border-color: #24283b;          // Dark subtle border
+$table-border-color: #24283b;
+$card-background-color: #24283b;   // Slightly lighter surface background
+$sidebar-background-color: #16161e; // Darker accent for sidebars
+
+// Masthead & Footer
+$masthead-background-color: #1a1b26;
+$footer-background-color: #16161e;
+$footer-text-color: #565f89;
+
+// Code Highlighting overrides
+$code-background-color: #16161e;
+$code-text-color: #c0caf5;
+
 @import "minimal-mistakes";
-
-@media (min-width: 64em) {
-  .page {
-    width: calc(100% - 200px);
-  }
-
-  .page__content {
-    max-width: 950px;
-    font-size: 0.9em;
-    line-height: 1.7;
-  }
-}

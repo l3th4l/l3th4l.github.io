@@ -1,4 +1,5 @@
 {
   "theme": "obsidian",
-  "cssTheme": "Obsidian gruvbox"
+  "cssTheme": "Tokyo Night",
+  "nativeMenus": true
 }
