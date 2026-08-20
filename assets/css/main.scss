@@ -25,8 +25,29 @@ $masthead-background-color: #1a1b26;
 $footer-background-color: #16161e;
 $footer-text-color: #565f89;
 
-// Code Highlighting overrides
+// --- TOKYO NIGHT SYNTAX HIGHLIGHTING ---
 $code-background-color: #16161e;
 $code-text-color: #c0caf5;
+
+// Rouge token overrides for Tokyo Night
+.highlight {
+  background: $code-background-color;
+  color: $code-text-color;
+
+  // Comments
+  .c, .cm, .cp, .c1, .cs { color: #565f89; font-style: italic; }
+  // Constants, Numbers, Boolean
+  .mi, .mf, .mh, .il, .mo, .m, .mi { color: #ff9e64; }
+  // Strings
+  .s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1 { color: #9ece6a; }
+  // Keywords, Control flow
+  .k, .kd, .kn, .kp, .kr, .kt, .kv { color: #bb9af7; }
+  // Functions, Methods
+  .nf, .na, .nc, .no { color: #7aa2f7; }
+  // Variables, Parameters
+  .nv, .vi, .vc, .vg { color: #c0caf5; }
+  // Operators, Punctuation
+  .o, .ow { color: #89ddff; }
+}
 
 @import "minimal-mistakes";
