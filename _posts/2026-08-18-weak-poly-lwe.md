@@ -166,7 +166,7 @@ If our guess $g$, is correct, then the collection of error images $\{e_j(\alpha)
 
 ## Verifying Membership of the Error Images in the Error Distribution
 
-Now that we have the images of our erros $\{e_j(\alpha)\}$, we must determine if the errors belong to the distribution our errors were originally sampled from, i.e. $\mathcal{N}_\sigma$. This gives us a way to determine if the pairs $(a_j(x), b_j(x))$ were generated from a Poly-LWE instance or are uniformly sampled from $R_q \times R_q$, which is only possible if out guess $g$ matches the image of the actual secret $s(\alpha)$. 
+Now that we have the images of our errors $\{e_j(\alpha)\}$, we must determine if the errors belong to the distribution our errors were originally sampled from, i.e. $\mathcal{N}_\sigma$. This gives us a way to determine if the pairs $(a_j(x), b_j(x))$ were generated from a Poly-LWE instance or are uniformly sampled from $R_q \times R_q$, which is only possible if our guess $g$ matches the image of the actual secret $s(\alpha)$. 
 
 To do this, we first compute the set $S$ of all possible values of $e(\alpha)$. Since $e(\alpha)$ is defined as 
 
@@ -203,6 +203,7 @@ We can write a function to compute the set $S$ as follows:
 
 ```python
 import math
+from itertools import product as cart 
 
 def generate_error_sums(n, sigma, truncate_limit, q, r):
     max_val = int(math.ceil(truncate_limit * sigma))
@@ -257,6 +258,57 @@ def generate_error_set(alpha, q, n, sigma, r):
 
 **Note:** While the attack works on paper, pushing the order past $r > 5$ makes generating the group sums using the Cartesian product (`cart`) computationally impossible. The sheer volume of combinations causes your script to instantly run out of memory or hang indefinitely. This is the primary bottleneck of this attack.
 {: .notice--warning}
+
+## Putting it All Together 
+
+Now that we have a rough idea of how the attack unfolds, let's put it all together into pseudocode and then write a function in sage. 
+
+```
+Input: A collection of l Poly-LWE samples (a_j, b_j), a root alpha, and valid error set S
+Output: The secret guess g for s(alpha), or "NOT PLWE"
+
+1. Initialize an empty list of surviving guesses: G = []
+
+2. For each possible guess g in Z_q (from 0 to q-1):
+   a. Assume the guess is valid: potential = True
+   
+   b. For each sample (a_j, b_j) in our collection:
+      - Compute the error image: err = b_j(alpha) - g * a_j(alpha)
+      - Check if err belongs to our expected error distribution/set S
+      - If err NOT in S:
+         - potential = False
+         - Break (stop checking remaining samples for this guess)
+         
+   c. If potential is still True after checking all samples:
+      - Append g to G (it survived the filter!)
+
+3. Evaluate final results:
+   - If G is empty: Return "NOT PLWE" (the samples are random, not Poly-LWE)
+   - If G has a single element: Return g (Success! Secret image recovered)
+   - If G has multiple elements: Return "INSUFFICIENT SAMPLES" (need more samples to narrow it down)
+```
+
+We want to define this as a function in sage, so that we can try repeating it with all the roots of $f(x)$
+
+```python 
+def attack(samples, q, N, sigma, R_q, alpha, alpha_order, D):
+    S = generate_error_set(alpha, q, N, sigma, alpha_order)
+    
+    for g in range(q):
+        # A guess 'g' is valid if every sample's error image falls within the set S
+        is_valid_guess = all(
+            R_q(list(b - g * a))(alpha) in S 
+            for a, b in samples
+        )
+        
+        if is_valid_guess:
+            return g
+            
+    return None
+```
+
+Performance Note: We make use of an early-exit pattern (break), this implementation skips checking remaining samples the moment a candidate secret guess $g$ produces an error image outside of $S$. Because the vast majority of guesses in $Z_q$ will fail, this optimization drastically reduces execution time, ensuring we don't waste CPU cycles testing invalid guesses against every single sample in our collection.
+{: .notice--info}
 # Recovering the Complete Secret with Lagrange Interpolation
 {: #recover}
 
