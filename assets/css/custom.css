@@ -22,14 +22,13 @@
     margin-right: auto !important;
 }
 
-
-
 /* Fix Left Sidebar Alignment & Sticky Behavior */
 .sidebar {
   @include breakpoint($large) {
     position: sticky;
     top: 2rem;
     height: fit-content;
+    align-self: flex-start; /* Required for sticky behavior inside flex layouts */
   }
 }
 
@@ -37,23 +36,20 @@
 .toc__menu {
   font-size: 0.85rem !important;
 
-  a {
+  /* Target every sub-element to override theme scaling */
+  li, ul, a, span {
     font-size: 0.85rem !important;
     font-weight: 400 !important;
-    line-height: 1.4;
-  }
-
-  li {
-    font-size: 0.85rem !important;
-    margin-bottom: 0.4rem;
+    line-height: 1.4 !important;
   }
 
   ul {
-    font-size: 0.85rem !important;
-    padding-left: 1rem;
-    margin-top: 0.4rem;
+    padding-left: 1rem !important;
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
   }
-}    list-style-type: none;
-    margin-bottom: 0.5rem;
+
+  li {
+    margin-bottom: 0.4rem !important;
   }
 }
