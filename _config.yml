@@ -92,7 +92,10 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: true
+      author_profile: false
+      toc: true               # Automatically generates a table of contents
+      toc_sticky: true        # Makes the table of contents sticky as you scroll
+      toc_label: "On this page" # Optional custom label for your navigation
       read_time: true
       comments: true
       share: true
