@@ -119,7 +119,15 @@ order of the roots: [2, 3, 3, 1]
 ```
 
 # Decision and Search Poly-LWE problem 
+In cryptography, the security of LWE and its polynomial variant relies on two core problems:
 
+- **Search Poly-LWE:** Given a collection of public samples $(a(x), b(x))$, your goal is to find the hidden secret polynomial $s(x)$. This is the ultimate objective of our attack.
+    
+- **Decision Poly-LWE:** Given a collection of samples, your goal is to distinguish whether they are valid Poly-LWE samples (generated via $b(x) = a(x)s(x) + e(x)$) or purely random pairs uniformly sampled from $R_q \times R_q$.
+    
+
+**Note:** In this article, we effectively turn the decision problem into a search problem. By running a decision test as a filter for each possible guess of the secret's evaluation, we can validate which guess is correct and ultimately solve the search problem.
+{: .notice--info}
 # Attack Setup 
 
 Before we proceed with our attack, we need to draw $m$ samples of the pairs $(a_j(x), b_j(x))$ from our oracle. To generate a single sample we can simply call our `PolyLWEInstance` : 
