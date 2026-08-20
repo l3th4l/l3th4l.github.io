@@ -34,6 +34,7 @@
     display: flex !important;
     align-items: flex-start !important;
     position: relative !important;
+    gap: 3rem !important;
   }
 
   /* Target with increased specificity to beat the theme */
