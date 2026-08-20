@@ -10,19 +10,26 @@
 @media (min-width: 64em) {
 
     /*
-     * Create our own two-column layout:
+     * Two-column layout:
      *
-     *   280px TOC | 950px ARTICLE
+     *   |<------ remaining space ------>|<--- 950px --->|
+     *   |              TOC              |    ARTICLE    |
      *
-     * The important part is grid-template-columns.
+     * The 1fr column automatically consumes all available
+     * space left after the 950px article and the gap.
      */
     .layout--single #main {
         display: grid !important;
-        grid-template-columns: 1fr 950px !important;
+
+        grid-template-columns: minmax(0, 1fr) 950px !important;
         column-gap: 3rem !important;
 
-        width: max-content !important;
-        max-width: none !important;
+        /*
+         * Use the full available width rather than
+         * shrinking the grid to its contents.
+         */
+        width: 100% !important;
+        max-width: 1400px !important;
 
         margin-left: auto !important;
         margin-right: auto !important;
@@ -32,19 +39,25 @@
 
 
     /* -----------------------------------------------------
-       SIDEBAR
+       SIDEBAR / TOC
        ----------------------------------------------------- */
 
     .layout--single #main .sidebar {
         grid-column: 1 !important;
         grid-row: 1 !important;
 
+        /*
+         * Keep the TOC visible while scrolling.
+         */
         position: sticky !important;
         top: 2rem !important;
 
-        width: 280px !important;
-        min-width: 280px !important;
-        max-width: 280px !important;
+        /*
+         * Fill the ENTIRE first grid column.
+         */
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
 
         height: auto !important;
         max-height: calc(100vh - 4rem) !important;
@@ -80,7 +93,7 @@
 
 
     /* -----------------------------------------------------
-       TOC
+       TOC CONTAINER
        ----------------------------------------------------- */
 
     .layout--single .sidebar .toc,
