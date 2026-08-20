@@ -1,37 +1,134 @@
 /* =========================================================
-   Minimal Mistakes — Custom Layout
+   MINIMAL MISTAKES CUSTOM LAYOUT
    ========================================================= */
 
 
 /* ---------------------------------------------------------
-   ARTICLE
+   MAIN PAGE LAYOUT
    --------------------------------------------------------- */
 
-.layout--single .page__content {
-    background: inherit !important;
-    width: 950px !important;
-    max-width: 950px !important;
-}
-
-
-/* Desktop article sizing */
 @media (min-width: 64em) {
+
+    /*
+     * Create our own two-column layout:
+     *
+     *   280px TOC | 950px ARTICLE
+     *
+     * The important part is grid-template-columns.
+     */
+    .layout--single #main {
+        display: grid !important;
+        grid-template-columns: 280px 950px !important;
+        column-gap: 3rem !important;
+
+        width: max-content !important;
+        max-width: none !important;
+
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+        align-items: start !important;
+    }
+
+
+    /* -----------------------------------------------------
+       SIDEBAR
+       ----------------------------------------------------- */
+
+    .layout--single #main .sidebar {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+
+        position: sticky !important;
+        top: 2rem !important;
+
+        width: 280px !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+
+        height: auto !important;
+        max-height: calc(100vh - 4rem) !important;
+
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+
+        align-self: start !important;
+
+        z-index: 10 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       ARTICLE
+       ----------------------------------------------------- */
+
+    .layout--single #main .page {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+
+        width: 950px !important;
+        max-width: 950px !important;
+
+        min-width: 0 !important;
+    }
+
 
     .layout--single .page__content {
         width: 950px !important;
         max-width: 950px !important;
     }
 
-    .layout--single .page__content p {
-        font-size: 0.85em !important;
-        line-height: 1.7;
+
+    /* -----------------------------------------------------
+       TOC
+       ----------------------------------------------------- */
+
+    .layout--single .sidebar .toc,
+    .layout--single .sidebar .toc__menu,
+    .layout--single .sidebar nav {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+
+    .layout--single .sidebar .toc__menu a {
+        display: block !important;
+        width: 100% !important;
     }
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
+   TOC TYPOGRAPHY
+   ========================================================= */
+
+.layout--single .toc__menu {
+    font-size: 0.85rem !important;
+}
+
+.layout--single .toc__menu li,
+.layout--single .toc__menu ul,
+.layout--single .toc__menu a,
+.layout--single .toc__menu span {
+    font-size: 0.85rem !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+}
+
+.layout--single .toc__menu ul {
+    padding-left: 1rem !important;
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+}
+
+.layout--single .toc__menu li {
+    margin-bottom: 0.4rem !important;
+}
+
+
+/* =========================================================
    MATHJAX
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .page__content .MathJax_Display {
     text-align: center !important;
@@ -43,140 +140,32 @@
 }
 
 
-/* ---------------------------------------------------------
-   SIDEBAR / TABLE OF CONTENTS
-   --------------------------------------------------------- */
+/* =========================================================
+   ARTICLE TEXT
+   ========================================================= */
+
+.layout--single .page__content {
+    background: inherit !important;
+}
 
 @media (min-width: 64em) {
 
-    /*
-     * Keep the sidebar visible while scrolling.
-     */
-    .layout--single .sidebar {
-        position: sticky !important;
-        top: 2rem !important;
-
-        align-self: flex-start !important;
-
-        /*
-         * Give the sidebar an actual width.
-         */
-        width: 280px !important;
-        min-width: 280px !important;
-        max-width: 280px !important;
-
-        /*
-         * Prevent the TOC from becoming constrained
-         * by the viewport height.
-         */
-        max-height: calc(100vh - 4rem) !important;
-        overflow-y: auto !important;
-
-        /*
-         * Don't let the sidebar disappear behind
-         * other page elements.
-         */
-        z-index: 10 !important;
-    }
-
-
-    /*
-     * Make the TOC itself use the full sidebar width.
-     */
-    .layout--single .sidebar .toc,
-    .layout--single .sidebar .toc__menu,
-    .layout--single .sidebar nav {
-        width: 100% !important;
-        max-width: none !important;
-    }
-
-
-    /*
-     * Prevent individual TOC links from imposing
-     * an unexpectedly narrow width.
-     */
-    .layout--single .sidebar .toc__menu a {
-        display: block !important;
-        width: 100% !important;
+    .layout--single .page__content p {
+        font-size: 0.85em !important;
+        line-height: 1.7;
     }
 }
 
 
-/* ---------------------------------------------------------
-   TOC TYPOGRAPHY
-   --------------------------------------------------------- */
-
-.layout--single .toc__menu {
-    font-size: 0.85rem !important;
-}
-
-
-/* All TOC levels */
-.layout--single .toc__menu li,
-.layout--single .toc__menu ul,
-.layout--single .toc__menu a,
-.layout--single .toc__menu span {
-    font-size: 0.85rem !important;
-    font-weight: 400 !important;
-    line-height: 1.4 !important;
-}
-
-
-/* Nested lists */
-.layout--single .toc__menu ul {
-    padding-left: 1rem !important;
-    margin-top: 0.3rem !important;
-    margin-bottom: 0.3rem !important;
-}
-
-
-/* Spacing between entries */
-.layout--single .toc__menu li {
-    margin-bottom: 0.4rem !important;
-}
-
-
-/* ---------------------------------------------------------
-   LARGE DESKTOP — GIVE THE WHOLE PAGE MORE ROOM
-   --------------------------------------------------------- */
-
-@media (min-width: 80em) {
-
-    /*
-     * Allow the page container to accommodate:
-     *
-     *     280px TOC + 950px article
-     *
-     * without squeezing the sidebar.
-     */
-    .layout--single .initial-content,
-    .layout--single #main {
-        max-width: 1300px !important;
-    }
-}
-
-
-/* ---------------------------------------------------------
-   VERY LARGE SCREENS
-   --------------------------------------------------------- */
-
-@media (min-width: 90em) {
-
-    .layout--single .initial-content,
-    .layout--single #main {
-        max-width: 1350px !important;
-    }
-}
-
-
-/* ---------------------------------------------------------
-   PREVENT HORIZONTAL CLIPPING
-   --------------------------------------------------------- */
+/* =========================================================
+   PREVENT THEME FROM CLIPPING OUR LAYOUT
+   ========================================================= */
 
 @media (min-width: 64em) {
 
-    .layout--single #main,
-    .layout--single .initial-content {
+    .initial-content,
+    .layout--single,
+    .layout--single #main {
         overflow: visible !important;
     }
 }
