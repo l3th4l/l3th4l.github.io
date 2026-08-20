@@ -47,6 +47,10 @@
     max-height: calc(100vh - 4rem) !important;
     overflow-y: auto !important;
     z-index: 10 !important;
+
+    /* Expand the width to fill the empty space */
+    flex: 0 0 280px !important; /* Sets a fixed, comfortable width (adjust 280px if needed) */
+    min-width: 280px !important;
   }
 }
 
