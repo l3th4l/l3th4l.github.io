@@ -185,8 +185,7 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false,
-      "vault-2-book:Obsidian 2 Book: Generate a book from a specified folder": false
+      "bases:Create new base": false
     }
   },
   "active": "83e06eb5acc8244b",
