@@ -533,6 +533,23 @@ if __name__ == "__main__":
         print(f"root : {root}, order : {Zmod(q)(root).multiplicative_order()}")
 ```
 
+**Output:**
+```
+q =  13273261
+f(x) =  x^4 - 39819782*x^3 + 220080781604882*x^2 - 582713379746921086858*x + 582713159666431493716
+f(x) = x^4 + x^3 + 13273260*x + 13273260 (mod 13273261)
+[factorized] f(x) = (x + 1) * (x + 6257720) * (x + 7015542) * (x + 13273260) (mod 13273261)
+
+
+=== Orders of roots ===
+
+
+root : 13273260, order : 2
+root : 7015541, order : 3
+root : 6257719, order : 3
+root : 1, order : 1
+```
+
 And there you have it! With this script, you can programmatically mint your own custom weak Poly-LWE instances, test the attack script we built earlier, and experiment with different degrees and orders.
 
 # References
